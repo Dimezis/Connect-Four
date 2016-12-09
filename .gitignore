@@ -1,0 +1,7 @@
+*.iml
+*.ipr
+*.iws
+*.class
+.idea/
+build/
+logs.txt
