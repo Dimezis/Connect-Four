@@ -8,19 +8,19 @@ Programming language doesn't matter.
 
 
 ## Flow
-1) Open socket connection to platinum.edu.pl on port 4242
+1) Open TCP socket connection to platinum.edu.pl on port 4242
 
-2) Send command `NAME your_nick_name`. It will be displayed in the statistics. You will receive `SUCCESS` response.
+2) Send command `NAME your_nick_name`. It will be displayed in the statistics. You will receive `SUCCESS` response
 
-3) Send command `JOIN channel_name`, where `channel_name` is an arbitrary String. It's used to connect 2 opponents to a single channel to play with each other. As a response, you will receive either `SUCCESS` or `CHANNEL_IS_FULL`, if the corresponding channel already has 2 players in game.
+3) Send command `JOIN channel_name`, where `channel_name` is an arbitrary String. It's used to connect 2 opponents to a single channel to play with each other. As a response, you will receive either `SUCCESS` or `CHANNEL_IS_FULL`, if the corresponding channel already has 2 players in game
 
-4) When both players are connected to same channel, you will receive Message `NEW_GAME`. This informs you, that you should reset your game board state. You can receive this message at any time, for example on a new round or when your opponent is changed.
+4) When both players are connected to same channel, you will receive Message `NEW_GAME`. This informs you, that you should reset your game board state. You can receive this message at any time, for example on a new round or when your opponent is changed
 
 5) One of the players will receive `YOUR_MOVE` Message. After this you can send the command to put a disc into some column
 
-6) This player now should send a command `PUT column_index`, where `column_index` is an integer from 0 to 6
+6) This player now should send a command `PUT column_index`, where `column_index` is an integer from 0 to 6. He can do this ONLY after receiving `YOUR_MOVE` command
 
-7) Opponent will receive command `PUT column_index`, which is reflecting previous player's move. This means, that you should update your local board state
+7) Opponent will receive command `PUT column_index`, which is reflecting previous player's move. This means, that you should update your local game board state
 
 8) After this, player will receive `YOUR_MOVE` Message. If game is not finished, go to step 5
 
