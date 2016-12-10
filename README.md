@@ -50,7 +50,7 @@ Programming language doesn't matter.
 
 
 ## Testing
-If you need to test your client, you can run two instances of your bot and `JOIN` to the same channel, preferably with some more or less unique name.
+If you need to test your client, send `NAME TEST` command, run two instances of your bot and `JOIN` to some channel with both of them.
 
 
 ## Errors list
