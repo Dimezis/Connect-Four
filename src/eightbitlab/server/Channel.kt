@@ -145,7 +145,7 @@ class Channel(val name: String) {
     }
 
     private fun printGameInfo() {
-        Log.print("\nChannel $name (round $roundNumber)\nMove ${game.moveCount}\n")
+        Log.print("\nChannel $name (round $roundNumber) Move ${game.moveCount}\n")
         Log.print(game.getBoardAsString())
     }
 

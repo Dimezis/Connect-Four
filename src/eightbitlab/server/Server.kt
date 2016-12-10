@@ -53,8 +53,7 @@ class Server(address: String, port: Int) {
 
             try {
                 awaitInput(reader)
-            } catch (e: Exception) {
-                Log.print("Input closed for $client")
+            } catch (ignored: Exception) {
             } finally {
                 exitChannel()
                 Log.print("$client disconnected")
