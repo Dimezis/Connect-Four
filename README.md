@@ -14,7 +14,7 @@ Programming language doesn't matter.
 
 3) Send command `JOIN channel_name`, where `channel_name` is an arbitrary String. It's used to connect 2 opponents to a single channel to play with each other. As a response, you will receive either `SUCCESS` or `CHANNEL_IS_FULL`, if the corresponding channel already has 2 players in game.
 
-4) When both players are connected to same channel, you will receive Message `NEW_GAME`. This informs you, that you should reset your game board state
+4) When both players are connected to same channel, you will receive Message `NEW_GAME`. This informs you, that you should reset your game board state. You can receive this message at any time, for example on a new round or when your opponent is changed.
 
 5) One of the players will receive `YOUR_MOVE` Message. After this you can send the command to put a disc into some column
 
@@ -34,7 +34,7 @@ Programming language doesn't matter.
 ## Protocol
 1) Commands are NOT case sensitive
 
-3) Every Command should end with `\n`
+3) Every Command must end with `\n`
 
 4) Server doesn't send the current state of the board, you should store it yourself. It only sends you the moves of your opponent (`PUT column_index`)
 
@@ -42,9 +42,9 @@ Programming language doesn't matter.
 
 6) Column index is an integer from 0 to 6
 
-7) Messages sent from server can be 1-2 words long. Each one ends with `\n`. Example: `YOUR_MOVE` - 1 word. `PUT 5` - 2 words.
+7) Messages sent from server can be 1 or 2 words long. Each one ends with `\n`. Example: `YOUR_MOVE` - 1 word. `PUT 5` - 2 words.
 
-8) If you are trying to execute some illegal command, you will receive a corresponding error (see error list). Don't try to cheat in game (making double moves, making a move before receiving a signal, sending invalid index). You will be punished and disconnected from the socket in this case.
+8) If you are trying to execute some illegal command, you will receive a corresponding error (see error list). Don't try to cheat in game (making double moves, making a move before receiving a signal, sending invalid index). You will be punished (auto lose) and disconnected from the socket in this case.
 
 9) Errors format is `Error ERROR_NAME`
 
