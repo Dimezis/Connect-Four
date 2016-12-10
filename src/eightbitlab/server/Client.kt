@@ -11,17 +11,19 @@ class Client(val socket: Socket, private val writer: Writer) {
     var name: String? = null
 
     fun sendMessage(message: String): Client {
+        logMessage(message)
         writer.write(message)
         return this
     }
 
     fun sendMessage(message: Message): Client {
-        Log.print("Sending $message")
+        logMessage(message.name)
         writer.write(message.name)
         return this
     }
 
     fun sendMessage(error: Error): Client {
+        logMessage(error.name)
         writer.write(error.message())
         return this
     }
@@ -33,9 +35,12 @@ class Client(val socket: Socket, private val writer: Writer) {
         }
     }
 
-    fun leaveChannel() {
-        currentChannel?.remove(this)
-        currentColor = null
+    private fun logMessage(message: String) {
+        var info = "Sending $message"
+        if (name != null) {
+            info += " to $name"
+        }
+        Log.print(info)
     }
 
     override fun toString(): String {

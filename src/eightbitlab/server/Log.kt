@@ -33,7 +33,7 @@ object Log {
     }
 
     fun error(error: String) {
-        System.err.println(error + "\n")
+        System.err.println(error)
 
         executor.execute {
             try {
@@ -47,6 +47,6 @@ object Log {
     private fun getCurrentFormattedTime() = formatter.format(Date())
 
     private fun writeToFile(fileName: String, message: String, formattedTime: String?) {
-        Files.write(Paths.get(fileName), "$formattedTime: $message \n".toByteArray(), StandardOpenOption.APPEND)
+        Files.write(Paths.get(fileName), "$formattedTime:\n$message\n".toByteArray(), StandardOpenOption.APPEND)
     }
 }

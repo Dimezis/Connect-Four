@@ -31,6 +31,6 @@ class TestClient(localSocketAddress: SocketAddress?) {
 }
 
 fun main(vararg args: String): Unit {
-    TestClient(InetSocketAddress(InetAddress.getByName("0.0.0.0"), 4242))
+    TestClient(InetSocketAddress(InetAddress.getLoopbackAddress(), 4242))
 }
 

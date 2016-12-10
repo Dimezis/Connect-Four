@@ -1,5 +1,6 @@
 package eightbitlab.game
 
+import eightbitlab.server.Log
 import eightbitlab.server.protocol.Error
 
 class ConnectFourGame {
@@ -94,7 +95,7 @@ class ConnectFourGame {
                 return row
             }
         }
-        println("No row to put $color in column $column")
+        Log.print("No row to put $color in column $column")
         throw RuntimeException(Error.COLUMN_IS_FULL.message())
     }
 
@@ -107,7 +108,7 @@ class ConnectFourGame {
                 stringBuilder.append('|')
                 stringBuilder.append(cell)
             }
-            stringBuilder.append('\n')
+            stringBuilder.append("|\n")
         }
         return stringBuilder.toString()
     }

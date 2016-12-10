@@ -37,7 +37,7 @@ class Server(address: String, port: Int) {
         override fun run() {
             while (!interrupted()) {
                 val clientSocket = serverSocket.accept()
-                println("$clientSocket connected")
+                Log.print("$clientSocket connected")
                 val writer = Writer(clientSocket)
                 val client = Client(clientSocket, writer)
                 ReaderThread(client).start()
@@ -54,10 +54,10 @@ class Server(address: String, port: Int) {
             try {
                 awaitInput(reader)
             } catch (e: Exception) {
-                println("Input closed for $client")
+                Log.print("Input closed for $client")
             } finally {
                 exitChannel()
-                println("$client disconnected")
+                Log.print("$client disconnected")
             }
         }
 

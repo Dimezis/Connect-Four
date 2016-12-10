@@ -28,13 +28,11 @@ class Channel(val name: String) {
 
     fun join(client: Client) {
         synchronized(this, {
-            if (client.currentChannel == this) {
+            if (client.currentChannel != null) {
                 client.sendMessage(Error.ALREADY_IN_CHANNEL)
                 return
             }
 
-            //leave from previous channel if there's any
-            client.leaveChannel()
             findPlaceForPlayer(client)
             client.currentChannel = this
             if (!hasPlaces()) {
@@ -79,7 +77,7 @@ class Channel(val name: String) {
             }
 
             //opponents need to play 4 rounds
-            if (roundNumber <= maxRounds) {
+            if (roundNumber < maxRounds) {
                 swapColors()
                 createGame()
                 roundNumber++
@@ -107,14 +105,13 @@ class Channel(val name: String) {
             it?.sendMessage(Message.DRAW)
             it?.name?.let { it -> Statistics.draw(it) }
         }
-        println(Message.DRAW)
+        Log.print(Message.DRAW.name)
     }
 
     private fun swapColors() {
         playersMap.swapKeys(RED, YELLOW)
         playersMap.entries.forEach {
             it.value?.currentColor = it.key
-            println(it.key + " " + it.value?.currentColor)
         }
     }
 
@@ -143,9 +140,13 @@ class Channel(val name: String) {
             opponent?.sendMessage("${Command.PUT} $column")
             game.put(client.currentColor!!, column)
 
-            Log.print("Move ${game.moveCount}")
-            Log.print(game.getBoardAsString())
+            printGameInfo()
         })
+    }
+
+    private fun printGameInfo() {
+        Log.print("\nChannel $name (round $roundNumber)\nMove ${game.moveCount}\n")
+        Log.print(game.getBoardAsString())
     }
 
     private fun notifyAboutMove(client: Client?) {
@@ -168,6 +169,7 @@ class Channel(val name: String) {
     fun clearChannel() {
         synchronized(this, {
             playersMap.values.forEach {
+                it?.closeSilently()
                 it?.currentChannel = null
                 it?.currentColor = null
             }
